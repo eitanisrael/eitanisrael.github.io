@@ -1,0 +1,9 @@
+{
+  "name": "Twitter Search Builder",
+  "short_name": "SearchBuilder",
+  "description": "Advanced Twitter / X search query builder",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#03030f",
+  "theme_color": "#03030f"
+}
