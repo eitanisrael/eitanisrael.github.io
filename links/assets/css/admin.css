@@ -1,0 +1,472 @@
+/* ==========================================================================
+   Link Hub — סגנונות ייעודיים לממשק הניהול (נטען אחרי styles.css)
+   ========================================================================== */
+
+.admin-body {
+  /* מבטלים את המרכוז הצר של העמוד הציבורי */
+}
+
+/* ---- מסך נעילה (הזנת טוקן) --------------------------------------------- */
+.lock {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.lock__card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 30px 28px;
+  box-shadow: var(--shadow);
+}
+.lock__mark {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: block;
+  margin: 0 auto 18px;
+}
+.lock__title {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.lock__sub {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  margin: 0 0 22px;
+  line-height: 1.55;
+}
+.lock__hint {
+  font-size: 0.82rem;
+  color: var(--text-faint);
+  margin-top: 14px;
+  line-height: 1.6;
+}
+.lock__hint a {
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+}
+.lock__hint a:hover {
+  border-bottom-color: currentColor;
+}
+
+/* ---- סרגל עליון -------------------------------------------------------- */
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px clamp(14px, 4vw, 28px);
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.bar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 1.02rem;
+}
+.bar__brand img {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+}
+.bar__spacer {
+  margin-inline-start: auto;
+}
+.bar__status {
+  font-size: 0.82rem;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+.bar__status[data-dirty="true"] {
+  color: var(--accent);
+}
+
+/* ---- כפתורים ------------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 15px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease,
+    transform 0.05s ease;
+}
+.btn:hover {
+  background: var(--surface-hover);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn svg {
+  width: 16px;
+  height: 16px;
+}
+.btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #1b1502;
+}
+.btn--primary:hover {
+  background: color-mix(in srgb, var(--accent) 88%, #fff);
+}
+.btn--ghost {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+.btn--ghost:hover {
+  color: var(--text);
+  background: var(--surface);
+}
+.btn--danger {
+  color: var(--danger);
+  border-color: transparent;
+  background: transparent;
+}
+.btn--danger:hover {
+  background: color-mix(in srgb, var(--danger) 14%, transparent);
+}
+.btn--sm {
+  padding: 6px 10px;
+  font-size: 0.82rem;
+}
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-faint);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.icon-btn:hover {
+  color: var(--text);
+  background: var(--surface-hover);
+}
+.icon-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.icon-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* ---- פריסת העורך ------------------------------------------------------- */
+.wrap {
+  max-width: 1140px;
+  margin-inline: auto;
+  padding: clamp(18px, 4vw, 32px) clamp(14px, 4vw, 28px) 80px;
+  display: grid;
+  gap: 26px;
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .wrap {
+    grid-template-columns: minmax(0, 1fr) 380px;
+  }
+  .preview-col {
+    position: sticky;
+    top: 78px;
+  }
+}
+
+/* ---- לוחות ------------------------------------------------------------- */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+.panel + .panel {
+  margin-top: 18px;
+}
+.panel__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.panel__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.panel__head .bar__spacer + * {
+  flex: 0 0 auto;
+}
+
+/* ---- שדות טופס --------------------------------------------------------- */
+.field {
+  display: block;
+  margin-bottom: 14px;
+}
+.field:last-child {
+  margin-bottom: 0;
+}
+.field__label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.input,
+.textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elev);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--text-faint);
+}
+.input[dir="ltr"] {
+  text-align: left;
+}
+.textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.row > .field {
+  flex: 1 1 160px;
+  margin-bottom: 0;
+}
+.row > .field--sm {
+  flex: 0 0 84px;
+}
+
+/* ---- קבוצות ופריטים בעורך --------------------------------------------- */
+.section-ed {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 16px;
+  background: var(--bg-elev);
+}
+.section-ed__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.section-ed__head .input {
+  font-weight: 600;
+}
+
+.item-ed {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-bottom: 10px;
+  background: var(--surface);
+}
+.item-ed.dragging {
+  opacity: 0.5;
+}
+.item-ed.drag-over {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+.item-ed__top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.item-ed__handle {
+  cursor: grab;
+  color: var(--text-faint);
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 30px;
+  flex: 0 0 auto;
+  touch-action: none;
+}
+.item-ed__handle:active {
+  cursor: grabbing;
+}
+.item-ed__handle svg {
+  width: 16px;
+  height: 16px;
+}
+.item-ed__title {
+  flex: 1 1 auto;
+  font-weight: 600;
+}
+.item-ed__actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 auto;
+}
+.item-ed__meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* מתג הסתרה */
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+.switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.switch__track {
+  width: 34px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--border-strong);
+  position: relative;
+  transition: background 0.15s ease;
+  flex: 0 0 auto;
+}
+.switch__track::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 2px;
+  inset-inline-start: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #fff;
+  transition: transform 0.15s ease;
+}
+.switch input:checked + .switch__track {
+  background: var(--accent);
+}
+.switch input:checked + .switch__track::after {
+  transform: translateX(-14px); /* RTL */
+}
+.switch input:focus-visible + .switch__track {
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.hidden-badge {
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1px 6px;
+}
+
+/* ---- תצוגה מקדימה ------------------------------------------------------ */
+.preview-col .panel__title {
+  color: var(--text-muted);
+}
+.preview {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  padding: 22px 18px;
+  overflow: hidden;
+}
+.preview .profile {
+  margin-bottom: 24px;
+}
+.preview .links {
+  gap: 20px;
+}
+
+/* ---- הודעות (toast) ---------------------------------------------------- */
+.toast {
+  position: fixed;
+  inset-block-end: 20px;
+  inset-inline: 0;
+  margin-inline: auto;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  background: var(--bg-elev);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  padding: 11px 16px;
+  font-size: 0.9rem;
+  box-shadow: var(--shadow);
+  z-index: 50;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.toast--error {
+  border-color: var(--danger);
+}
+.toast--ok {
+  border-color: var(--accent);
+}
+
+/* ---- כללי -------------------------------------------------------------- */
+.muted {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+.empty-note {
+  color: var(--text-faint);
+  font-size: 0.88rem;
+  text-align: center;
+  padding: 14px;
+}
+[hidden] {
+  display: none !important;
+}

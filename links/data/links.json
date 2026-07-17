@@ -1,0 +1,48 @@
+{
+  "profile": {
+    "name": "איתן שמעוני",
+    "tagline": "בונה אפליקציות, כלים ודברים קטנים לאינטרנט",
+    "avatar": "./assets/icons/avatar.svg"
+  },
+  "sections": [
+    {
+      "id": "main",
+      "title": "",
+      "items": [
+        {
+          "id": "chevron",
+          "title": "The Chevron Guide",
+          "url": "",
+          "description": "מדריך אינטראקטיבי",
+          "icon": "",
+          "hidden": false
+        },
+        {
+          "id": "petachtikva",
+          "title": "הוכחות שפתח תקווה לא קיימת",
+          "url": "",
+          "description": "",
+          "icon": "",
+          "hidden": false
+        },
+        {
+          "id": "hedgehog",
+          "title": "חשבון הקיפוד",
+          "url": "",
+          "description": "טוויטר / X",
+          "icon": "",
+          "hidden": false
+        },
+        {
+          "id": "hats",
+          "title": "ערוץ הכובעים",
+          "url": "",
+          "description": "ערוץ בוואטסאפ",
+          "icon": "",
+          "hidden": false
+        }
+      ]
+    }
+  ],
+  "updatedAt": "2026-07-17T00:00:00.000Z"
+}

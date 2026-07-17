@@ -1,0 +1,406 @@
+/* ==========================================================================
+   Link Hub — מערכת עיצוב משותפת (עמוד ציבורי + אדמין)
+   מינימלי, RTL, חשוך כברירת מחדל עם מעבר לבהיר.
+   ========================================================================== */
+
+/* ---- פונט: Assistant, מוטמע מקומית (עברית + לטינית) --------------------- */
+@font-face {
+  font-family: "Assistant";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/assistant-hebrew-400.woff2") format("woff2");
+  unicode-range: U+0590-05FF, U+200F, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Assistant";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/assistant-hebrew-500.woff2") format("woff2");
+  unicode-range: U+0590-05FF, U+200F, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Assistant";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/assistant-hebrew-600.woff2") format("woff2");
+  unicode-range: U+0590-05FF, U+200F, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Assistant";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/assistant-hebrew-700.woff2") format("woff2");
+  unicode-range: U+0590-05FF, U+200F, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Assistant";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/assistant-latin-400.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2074, U+20AC, U+2122;
+}
+@font-face {
+  font-family: "Assistant";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/assistant-latin-500.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2074, U+20AC, U+2122;
+}
+@font-face {
+  font-family: "Assistant";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/assistant-latin-600.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2074, U+20AC, U+2122;
+}
+@font-face {
+  font-family: "Assistant";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/assistant-latin-700.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2074, U+20AC, U+2122;
+}
+
+/* ---- טוקנים: מצב חשוך (ברירת מחדל) ------------------------------------- */
+:root {
+  --bg: #0e0f13;
+  --bg-elev: #16181f;
+  --surface: #16181f;
+  --surface-hover: #1c1f28;
+  --text: #eceef2;
+  --text-muted: #969aa4;
+  --text-faint: #6b6f79;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --accent: #d9a441;
+  --accent-soft: rgba(217, 164, 65, 0.14);
+  --danger: #e5686a;
+  --ring: rgba(217, 164, 65, 0.55);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 30px rgba(0, 0, 0, 0.28);
+
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 9px;
+  --maxw: 600px;
+
+  color-scheme: dark;
+}
+
+/* מצב בהיר לפי הגדרות המערכת */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg: #f6f6f3;
+    --bg-elev: #ffffff;
+    --surface: #ffffff;
+    --surface-hover: #fbfaf7;
+    --text: #191a1d;
+    --text-muted: #63666e;
+    --text-faint: #90939b;
+    --border: rgba(0, 0, 0, 0.10);
+    --border-strong: rgba(0, 0, 0, 0.16);
+    --accent: #a56c14;
+    --accent-soft: rgba(165, 108, 20, 0.12);
+    --danger: #c53b3d;
+    --ring: rgba(165, 108, 20, 0.5);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 10px 30px rgba(0, 0, 0, 0.06);
+    color-scheme: light;
+  }
+}
+
+/* עקיפה ידנית (נשמרת ב-localStorage) */
+:root[data-theme="light"] {
+  --bg: #f6f6f3;
+  --bg-elev: #ffffff;
+  --surface: #ffffff;
+  --surface-hover: #fbfaf7;
+  --text: #191a1d;
+  --text-muted: #63666e;
+  --text-faint: #90939b;
+  --border: rgba(0, 0, 0, 0.10);
+  --border-strong: rgba(0, 0, 0, 0.16);
+  --accent: #a56c14;
+  --accent-soft: rgba(165, 108, 20, 0.12);
+  --danger: #c53b3d;
+  --ring: rgba(165, 108, 20, 0.5);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 10px 30px rgba(0, 0, 0, 0.06);
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* ---- בסיס --------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Assistant", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+/* ---- פריסת עמוד --------------------------------------------------------- */
+.page {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding: clamp(28px, 7vw, 64px) clamp(18px, 5vw, 28px) 48px;
+}
+
+/* ---- כפתור מעבר ערכת נושא ----------------------------------------------- */
+.theme-toggle {
+  position: fixed;
+  inset-block-start: 16px;
+  inset-inline-end: 16px;
+  z-index: 20;
+  width: 40px;
+  height: 40px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg-elev) 78%, transparent);
+  backdrop-filter: blur(8px);
+  color: var(--text-muted);
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+.theme-toggle svg {
+  width: 19px;
+  height: 19px;
+}
+.theme-toggle .icon-sun {
+  display: none;
+}
+.theme-toggle .icon-moon {
+  display: block;
+}
+:root[data-theme="light"] .theme-toggle .icon-sun,
+:root[data-theme="dark"] .theme-toggle .icon-moon {
+  display: block;
+}
+:root[data-theme="light"] .theme-toggle .icon-moon,
+:root[data-theme="dark"] .theme-toggle .icon-sun {
+  display: none;
+}
+
+/* ---- כותרת פרופיל ------------------------------------------------------- */
+.profile {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-block-end: 34px;
+}
+.profile__avatar {
+  width: 76px;
+  height: 76px;
+  border-radius: 999px;
+  object-fit: cover;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.profile__name {
+  font-size: clamp(1.45rem, 5vw, 1.72rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0;
+  line-height: 1.2;
+}
+.profile__tagline {
+  font-size: 0.98rem;
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 42ch;
+  line-height: 1.55;
+}
+
+/* ---- קבוצות וקישורים ---------------------------------------------------- */
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+.section__title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-faint);
+  margin: 0 0 12px;
+  padding-inline: 4px;
+}
+.section__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.link-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: transform 0.16s ease, background 0.16s ease,
+    border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.link-card:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+.link-card:active {
+  transform: translateY(0);
+}
+.link-card__icon {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+  line-height: 1;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.link-card__body {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.link-card__title {
+  font-size: 1.03rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.link-card__desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.link-card__arrow {
+  flex: 0 0 auto;
+  margin-inline-start: auto;
+  color: var(--text-faint);
+  display: inline-flex;
+  transition: color 0.16s ease, transform 0.16s ease;
+}
+.link-card__arrow svg {
+  width: 18px;
+  height: 18px;
+}
+.link-card:hover .link-card__arrow {
+  color: var(--accent);
+  transform: translateX(-3px); /* RTL: לכיוון הקריאה */
+}
+
+/* ---- מצב ריק ------------------------------------------------------------ */
+.empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px 16px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+}
+
+/* ---- פוטר --------------------------------------------------------------- */
+.foot {
+  margin-block-start: 40px;
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 0.8rem;
+}
+.foot a {
+  color: var(--text-muted);
+  border-bottom: 1px solid transparent;
+}
+.foot a:hover {
+  border-bottom-color: currentColor;
+}
+
+/* ---- עזרי טעינה --------------------------------------------------------- */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  height: 72px;
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--text) 6%, transparent),
+    transparent
+  );
+  transform: translateX(100%);
+  animation: shimmer 1.3s infinite;
+}
+@keyframes shimmer {
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
