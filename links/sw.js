@@ -6,7 +6,7 @@
  *
  * מעלים את מספר הגרסה כדי לרענן מטמון אחרי שינוי בקוד.
  */
-const VERSION = "linkhub-v1";
+const VERSION = "linkhub-v2";
 const CACHE = VERSION;
 
 const PRECACHE = [

@@ -89,6 +89,15 @@
         </button>
       </header>
 
+      <div class="errbar" id="errbar" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16.5v.01"/></svg>
+        <span id="errText"></span>
+        <button class="btn btn--sm" type="button" id="errRetry">נסה לשמור שוב</button>
+        <button class="icon-btn" type="button" id="errClose" aria-label="סגירה">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
       <main class="wrap">
         <div class="editor-col">
           <section class="panel">

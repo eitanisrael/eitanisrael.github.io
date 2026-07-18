@@ -15,6 +15,9 @@
   let dirty = false;
   let saving = false;
   let drag = null; // { id } בזמן גרירה
+  let autosaveTimer = null;
+  let autosaveBlocked = false; // אחרי כשל — עוצרים שמירה אוטומטית עד טיפול
+  const AUTOSAVE_DELAY = 3500; // מ"ש של חוסר פעילות לפני שמירה אוטומטית
 
   /* ================= עזרים ================= */
   function toast(msg, kind) {
@@ -48,11 +51,15 @@
     } else if (saving) {
       s.textContent = "שומר…";
       s.dataset.dirty = "true";
-    } else if (dirty) {
-      s.textContent = "יש שינויים שלא נשמרו";
+    } else if (dirty && autosaveBlocked) {
+      s.textContent = "השמירה נכשלה";
       s.dataset.dirty = "true";
+    } else if (dirty) {
+      s.textContent = "ממתין לשמירה…";
+      s.dataset.dirty = "true";
+      scheduleAutosave();
     } else {
-      s.textContent = "הכול שמור";
+      s.textContent = "נשמר ✓";
       s.dataset.dirty = "false";
     }
     $("saveBtn").disabled = localMode || saving || !dirty;
@@ -431,26 +438,48 @@
     }
   }
 
-  /* ================= שמירה ================= */
-  async function doSave() {
+  /* ================= שמירה (אוטומטית + ידנית) ================= */
+  function scheduleAutosave() {
+    if (localMode || autosaveBlocked) return;
+    clearTimeout(autosaveTimer);
+    autosaveTimer = setTimeout(function () {
+      doSave(false);
+    }, AUTOSAVE_DELAY);
+  }
+
+  function showError(msg) {
+    $("errText").textContent = msg;
+    $("errbar").hidden = false;
+  }
+  function hideError() {
+    $("errbar").hidden = true;
+  }
+
+  async function doSave(manual) {
+    clearTimeout(autosaveTimer);
+    if (manual) autosaveBlocked = false; // לחיצה ידנית = ניסיון מחדש
     if (saving || localMode || !dirty) return;
+
     saving = true;
     setDirty(dirty);
     try {
       await store.save(state);
       saving = false;
+      autosaveBlocked = false;
+      hideError();
       setDirty(false);
       toast("נשמר ✓  האתר הציבורי יתעדכן בעוד רגע.", "ok");
     } catch (err) {
       saving = false;
+      autosaveBlocked = true; // לא מנסים שוב אוטומטית עד שהמשתמש מטפל
       setDirty(dirty);
       const m = err.message || "שמירה נכשלה.";
       if (/401/.test(m)) {
         store.clearToken();
-        toast("הטוקן פג או בוטל — צריך להיכנס מחדש.", "error");
         showLock();
+        toast("הטוקן פג או בוטל — צריך להיכנס מחדש.", "error");
       } else {
-        toast(m, "error");
+        showError("השמירה נכשלה: " + m);
       }
     }
   }
@@ -470,7 +499,13 @@
       renderPreview();
       setDirty(true);
     });
-    $("saveBtn").addEventListener("click", doSave);
+    $("saveBtn").addEventListener("click", function () {
+      doSave(true);
+    });
+    $("errRetry").addEventListener("click", function () {
+      doSave(true);
+    });
+    $("errClose").addEventListener("click", hideError);
     $("lockNow").addEventListener("click", function () {
       if (dirty && !confirm("יש שינויים שלא נשמרו. לצאת בכל זאת?")) return;
       store.clearToken();
@@ -481,7 +516,7 @@
     document.addEventListener("keydown", function (e) {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") {
         e.preventDefault();
-        doSave();
+        doSave(true);
       }
     });
 

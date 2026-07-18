@@ -93,6 +93,37 @@
   color: var(--accent);
 }
 
+/* ---- פס שגיאת שמירה (קבוע עד שמטפלים) --------------------------------- */
+.errbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 1140px;
+  margin: 14px auto 0;
+  padding: 11px 14px;
+  border: 1px solid var(--danger);
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  font-size: 0.89rem;
+  line-height: 1.45;
+}
+.errbar > svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  color: var(--danger);
+}
+.errbar > span {
+  flex: 1 1 auto;
+  min-width: 0;
+  word-break: break-word;
+}
+.errbar .btn,
+.errbar .icon-btn {
+  flex: 0 0 auto;
+}
+
 /* ---- כפתורים ------------------------------------------------------------ */
 .btn {
   display: inline-flex;
@@ -125,7 +156,7 @@
 .btn--primary {
   background: var(--accent);
   border-color: var(--accent);
-  color: #1b1502;
+  color: var(--on-accent);
 }
 .btn--primary:hover {
   background: color-mix(in srgb, var(--accent) 88%, #fff);
