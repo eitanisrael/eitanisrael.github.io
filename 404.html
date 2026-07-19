@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הדף לא נמצא — Tweetelligent</title>
+<meta name="robots" content="noindex">
+<style>
+  :root{--bg:#03030f;--text:#f4f8ff;--muted:#7aaccc;--dim:#4a7090;--accent:#00d4ff;--border:#1e3450}
+  @media (prefers-color-scheme: light){
+    :root{--bg:#f0f4f8;--text:#0f172a;--muted:#475569;--dim:#64748b;--accent:#0369a1;--border:#e2e8f0}
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;
+    align-items:center;justify-content:center;padding:24px;text-align:center;
+    font-family:'Assistant',-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.7}
+  .code{font-size:56px;color:var(--accent);letter-spacing:4px;margin-bottom:8px}
+  h1{font-size:19px;margin-bottom:10px}
+  p{color:var(--muted);font-size:14px;margin-bottom:22px}
+  .en{color:var(--dim);font-size:13px;direction:ltr}
+  a{display:inline-block;border:1px solid var(--accent);border-radius:8px;padding:9px 20px;
+    color:var(--accent);text-decoration:none;font-size:14px}
+  a:active{transform:scale(.96)}
+</style>
+<script>
+  // The tool used to live at /Tweetelligent/ (a second, duplicate copy of this
+  // same site). That path is gone, so anyone arriving on an old link or bookmark
+  // is forwarded to the equivalent page here instead of hitting a dead end.
+  (function () {
+    var p = location.pathname;
+    var legacy = /^\/Tweetelligent\/?/i;
+    if (legacy.test(p)) {
+      var rest = p.replace(legacy, "");
+      location.replace("/" + rest + location.search + location.hash);
+    }
+  })();
+</script>
+</head>
+<body>
+  <div>
+    <div class="code">404</div>
+    <h1>הדף לא נמצא</h1>
+    <p>ייתכן שהכתובת השתנתה.<br><span class="en">This page doesn't exist — it may have moved.</span></p>
+    <a href="/">חזרה לבונה החיפושים · Back to the tool</a>
+  </div>
+</body>
+</html>

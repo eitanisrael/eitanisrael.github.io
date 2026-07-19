@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# The link hub's admin screen is a private editing UI — no reason to index it.
+Disallow: /links/admin.html
+
+Sitemap: https://eitanisrael.github.io/sitemap.xml
