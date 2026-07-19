@@ -204,12 +204,17 @@ window.LINKHUB_STORE = (function () {
       res = await put();
     }
     if (!res.ok) {
-      let msg = "שמירה נכשלה (" + res.status + ").";
+      // שגיאה מובנית — admin.js מתרגם אותה להנחיה בעברית
+      let apiMessage = "";
       try {
         const e = await res.json();
-        if (e && e.message) msg += " " + e.message;
+        if (e && e.message) apiMessage = e.message;
       } catch (_) {}
-      throw new Error(msg);
+      const err = new Error(apiMessage || "HTTP " + res.status);
+      err.status = res.status;
+      err.apiMessage = apiMessage;
+      err.endpoint = "PUT " + cfg.dataPath;
+      throw err;
     }
     const out = await res.json();
     if (out && out.content && out.content.sha) _sha = out.content.sha;

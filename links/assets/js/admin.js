@@ -447,12 +447,66 @@
     }, AUTOSAVE_DELAY);
   }
 
-  function showError(msg) {
-    $("errText").textContent = msg;
+  function showError(title, fix, raw) {
+    $("errTitle").textContent = title;
+    $("errFix").textContent = fix || "";
+    $("errRaw").textContent = raw || "";
+    $("errDetails").hidden = !raw;
     $("errbar").hidden = false;
   }
   function hideError() {
     $("errbar").hidden = true;
+  }
+
+  const TOKEN_HOWTO =
+    'צור טוקן חדש: תחת "Repository access" בחר Only select repositories ואת ה-repo הזה, ' +
+    "ותחת Permissions → Repository permissions → Contents בחר Read and write. " +
+    'שים לב: הבחירה "Public Repositories (read-only)" נותנת הרשאת קריאה בלבד — ' +
+    "הכניסה לממשק תעבוד אבל השמירה תיכשל.";
+
+  // מתרגם שגיאת API להנחיה ברורה במקום טקסט טכני באנגלית
+  function explainSaveError(err) {
+    const status = err.status;
+    const raw = [
+      status ? "HTTP " + status : "network error",
+      err.endpoint || "",
+      err.apiMessage || err.message || "",
+    ]
+      .filter(Boolean)
+      .join(" — ");
+
+    if (!status) {
+      return {
+        title: "לא הצלחנו להגיע ל-GitHub.",
+        fix: "בדוק את החיבור לאינטרנט. אם יש חוסם פרסומות או הרחבה שחוסמת את api.github.com — בטל אותה לאתר הזה.",
+        raw: raw,
+      };
+    }
+    if (status === 403) {
+      return { title: "לטוקן אין הרשאת כתיבה ל-repo.", fix: TOKEN_HOWTO, raw: raw };
+    }
+    if (status === 404) {
+      return {
+        title: "הטוקן לא רואה את ה-repo הזה.",
+        fix: TOKEN_HOWTO,
+        raw: raw,
+      };
+    }
+    if (status === 409 || status === 422) {
+      return {
+        title: "הקובץ השתנה במקביל ממקום אחר.",
+        fix: "רענן את הדף כדי לטעון את הגרסה העדכנית, ואז ערוך ושמור שוב.",
+        raw: raw,
+      };
+    }
+    if (status >= 500) {
+      return {
+        title: "תקלה זמנית אצל GitHub.",
+        fix: "נסה לשמור שוב בעוד רגע.",
+        raw: raw,
+      };
+    }
+    return { title: "השמירה נכשלה.", fix: "", raw: raw };
   }
 
   async function doSave(manual) {
@@ -473,14 +527,14 @@
       saving = false;
       autosaveBlocked = true; // לא מנסים שוב אוטומטית עד שהמשתמש מטפל
       setDirty(dirty);
-      const m = err.message || "שמירה נכשלה.";
-      if (/401/.test(m)) {
+      if (err.status === 401) {
         store.clearToken();
         showLock();
         toast("הטוקן פג או בוטל — צריך להיכנס מחדש.", "error");
-      } else {
-        showError("השמירה נכשלה: " + m);
+        return;
       }
+      const info = explainSaveError(err);
+      showError(info.title, info.fix, info.raw);
     }
   }
 

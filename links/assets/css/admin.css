@@ -114,10 +114,41 @@
   flex: 0 0 auto;
   color: var(--danger);
 }
-.errbar > span {
+.errbar__body {
   flex: 1 1 auto;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.errbar__body strong {
+  font-weight: 700;
+}
+.errbar__body span {
+  color: var(--text-muted);
   word-break: break-word;
+}
+.errbar details {
+  margin-top: 4px;
+  font-size: 0.8rem;
+}
+.errbar summary {
+  cursor: pointer;
+  color: var(--text-faint);
+  width: fit-content;
+}
+.errbar code {
+  display: block;
+  margin-top: 5px;
+  padding: 7px 9px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  direction: ltr;
+  text-align: left;
+  word-break: break-word;
+  white-space: pre-wrap;
 }
 .errbar .btn,
 .errbar .icon-btn {
