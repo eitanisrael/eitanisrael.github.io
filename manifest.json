@@ -1,9 +1,0 @@
-{
-  "name": "Tweetelligent",
-  "short_name": "Tweetelligent",
-  "description": "Build advanced Twitter search queries visually — no operators to memorise.",
-  "start_url": "/Tweetelligent/",
-  "display": "standalone",
-  "background_color": "#03030f",
-  "theme_color": "#03030f"
-}

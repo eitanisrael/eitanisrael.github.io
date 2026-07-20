@@ -28,9 +28,27 @@
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);line-height:1.75;
     font-family:'Assistant',-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
-  .wrap{max-width:820px;margin:0 auto;padding:34px 20px 80px}
-  h1{font-size:13px;letter-spacing:2px;color:var(--dim);text-transform:uppercase;margin-bottom:26px}
-  h1 a{color:var(--accent);text-decoration:none}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 20px 80px}
+  .topbar{position:sticky;top:0;z-index:5;background:var(--bg);
+    border-bottom:1px solid var(--divider);backdrop-filter:blur(12px)}
+  .topbar-inner{max-width:820px;margin:0 auto;padding:11px 20px;display:flex;
+    align-items:center;justify-content:space-between;gap:12px}
+  .brand{font-size:13px;letter-spacing:2px;color:var(--accent);
+    text-transform:uppercase;text-decoration:none}
+  .close{display:flex;align-items:center;justify-content:center;width:32px;height:32px;
+    border:1px solid var(--border);border-radius:8px;color:var(--muted);flex-shrink:0}
+  .close svg{width:15px;height:15px}
+  .close:hover{border-color:var(--accent);color:var(--accent)}
+  .close:active{transform:scale(.95)}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .copy-cell{width:44px;text-align:center}
+  .copy{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;
+    padding:0;background:none;border:1px solid var(--border);border-radius:6px;
+    color:var(--dim);cursor:pointer;transition:transform .08s,border-color .15s,color .15s}
+  .copy svg{width:13px;height:13px}
+  .copy:hover{border-color:var(--accent);color:var(--accent)}
+  .copy:active{transform:scale(.9)}
+  .copy.done{border-color:var(--accent);color:var(--accent)}
   h2{font-size:26px;color:var(--text);margin:0 0 14px;line-height:1.35}
   h3{font-size:17px;color:var(--accent);margin:34px 0 10px}
   h4{font-size:14px;color:var(--label);margin-bottom:8px}
@@ -82,8 +100,15 @@
 </style>
 </head>
 <body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="/">Tweetelligent</a>
+    <!-- The way back. Arriving here from the app's "full page" button and then
+         having no way out was the complaint this fixes. -->
+    <a class="close" href="/" title="סגירה · Close" aria-label="סגירה · Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></a>
+  </div>
+</div>
 <div class="wrap">
-  <h1><a href="/">Tweetelligent</a></h1>
 
   <section dir="rtl" lang="he">
     <nav class="crumbs"><a href="/">הכלי</a> · <span aria-current="page">מדריך</span> · <a href="/privacy.html">פרטיות</a></nav>
@@ -96,38 +121,44 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th scope="col">אופרטור</th><th scope="col">משמעות</th><th scope="col">דוגמה</th></tr>
+            <tr><th scope="col">אופרטור</th><th scope="col">משמעות</th><th scope="col">דוגמה</th><th scope="col"><span class="sr-only">העתקת</span></th></tr>
           </thead>
           <tbody>
             <tr>
               <td><code>cat dog</code></td>
               <td>שני הביטויים חייבים להופיע (זו ברירת המחדל — רווח = וגם).</td>
               <td><code class="ex">קיפוד כיפה</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="cat dog" title="העתקת cat dog" aria-label="העתקת cat dog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>&quot;exact phrase&quot;</code></td>
               <td>מחפש את הרצף המדויק, במרכאות.</td>
               <td><code class="ex">&quot;קיפוד עם כיפה&quot;</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="&quot;exact phrase&quot;" title="העתקת &quot;exact phrase&quot;" aria-label="העתקת &quot;exact phrase&quot;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>cat OR dog</code></td>
               <td>לפחות אחת מהמילים. OR חייב להיות באותיות גדולות.</td>
               <td><code class="ex">קיפוד OR חתול</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="cat OR dog" title="העתקת cat OR dog" aria-label="העתקת cat OR dog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>-word</code></td>
               <td>מחריג ציוצים שמכילים את המילה.</td>
               <td><code class="ex">קיפוד -חתול</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="-word" title="העתקת -word" aria-label="העתקת -word"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>#hashtag</code></td>
               <td>ציוצים עם ההאשטג.</td>
               <td><code class="ex">#קיפודים</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="#hashtag" title="העתקת #hashtag" aria-label="העתקת #hashtag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>(a OR b) c</code></td>
               <td>סוגריים מקבצים תנאים — שימושי לשילובים.</td>
               <td><code class="ex">(קיפוד OR חתול) חמוד</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="(a OR b) c" title="העתקת (a OR b) c" aria-label="העתקת (a OR b) c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
           </tbody>
         </table>
@@ -137,28 +168,32 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th scope="col">אופרטור</th><th scope="col">משמעות</th><th scope="col">דוגמה</th></tr>
+            <tr><th scope="col">אופרטור</th><th scope="col">משמעות</th><th scope="col">דוגמה</th><th scope="col"><span class="sr-only">העתקת</span></th></tr>
           </thead>
           <tbody>
             <tr>
               <td><code>from:</code></td>
               <td>ציוצים מהמשתמש. פסיק = מספר משתמשים.</td>
               <td><code class="ex">from:eitanshimoni</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="from:" title="העתקת from:" aria-label="העתקת from:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>to:</code></td>
               <td>ציוצים שהם תגובה למשתמש זה</td>
               <td><code class="ex">to:eitanshimoni</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="to:" title="העתקת to:" aria-label="העתקת to:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>@</code></td>
               <td>ציוצים שמאזכרים משתמש זה</td>
               <td><code class="ex">@eitanshimoni</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="@" title="העתקת @" aria-label="העתקת @"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>list:</code></td>
               <td>ציוצים מחברי רשימה מסוימת.</td>
               <td><code class="ex">list:123456</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="list:" title="העתקת list:" aria-label="העתקת list:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
           </tbody>
         </table>
@@ -168,23 +203,26 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th scope="col">אופרטור</th><th scope="col">משמעות</th><th scope="col">דוגמה</th></tr>
+            <tr><th scope="col">אופרטור</th><th scope="col">משמעות</th><th scope="col">דוגמה</th><th scope="col"><span class="sr-only">העתקת</span></th></tr>
           </thead>
           <tbody>
             <tr>
               <td><code>since:</code></td>
               <td>ציוצים מתאריך זה ואילך</td>
               <td><code class="ex">since:2026-01-01</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="since:" title="העתקת since:" aria-label="העתקת since:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>until:</code></td>
               <td>ציוצים לפני תאריך זה</td>
               <td><code class="ex">until:2026-12-31</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="until:" title="העתקת until:" aria-label="העתקת until:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>within_time:</code></td>
               <td>ציוצים מהזמן האחרון (דקות/שעות/ימים).</td>
               <td><code class="ex">within_time:2d</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="within_time:" title="העתקת within_time:" aria-label="העתקת within_time:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
           </tbody>
         </table>
@@ -194,23 +232,26 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th scope="col">אופרטור</th><th scope="col">משמעות</th><th scope="col">דוגמה</th></tr>
+            <tr><th scope="col">אופרטור</th><th scope="col">משמעות</th><th scope="col">דוגמה</th><th scope="col"><span class="sr-only">העתקת</span></th></tr>
           </thead>
           <tbody>
             <tr>
               <td><code>min_faves:</code></td>
               <td>מינימום לייקים</td>
               <td><code class="ex">min_faves:100</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="min_faves:" title="העתקת min_faves:" aria-label="העתקת min_faves:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>min_retweets:</code></td>
               <td>מינימום ריטוויטים</td>
               <td><code class="ex">min_retweets:50</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="min_retweets:" title="העתקת min_retweets:" aria-label="העתקת min_retweets:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>min_replies:</code></td>
               <td>מינימום תגובות</td>
               <td><code class="ex">min_replies:10</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="min_replies:" title="העתקת min_replies:" aria-label="העתקת min_replies:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
           </tbody>
         </table>
@@ -220,38 +261,44 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th scope="col">אופרטור</th><th scope="col">משמעות</th><th scope="col">דוגמה</th></tr>
+            <tr><th scope="col">אופרטור</th><th scope="col">משמעות</th><th scope="col">דוגמה</th><th scope="col"><span class="sr-only">העתקת</span></th></tr>
           </thead>
           <tbody>
             <tr>
               <td><code>filter:links</code></td>
               <td>רק ציוצים עם קישורים</td>
               <td><code class="ex">קיפוד filter:links</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="filter:links" title="העתקת filter:links" aria-label="העתקת filter:links"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>filter:media</code></td>
               <td>רק ציוצים עם מדיה</td>
               <td><code class="ex">קיפוד filter:media</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="filter:media" title="העתקת filter:media" aria-label="העתקת filter:media"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>filter:images</code></td>
               <td>רק ציוצים עם תמונות</td>
               <td><code class="ex">קיפוד filter:images</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="filter:images" title="העתקת filter:images" aria-label="העתקת filter:images"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>filter:videos</code></td>
               <td>רק ציוצים עם סרטונים</td>
               <td><code class="ex">קיפוד filter:videos</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="filter:videos" title="העתקת filter:videos" aria-label="העתקת filter:videos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>-filter:retweets</code></td>
               <td>הסתר ריטוויטים</td>
               <td><code class="ex">קיפוד -filter:retweets</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="-filter:retweets" title="העתקת -filter:retweets" aria-label="העתקת -filter:retweets"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>filter:replies</code></td>
               <td>רק ציוצים שהם תגובות. עם מינוס — בלי תגובות.</td>
               <td><code class="ex">-filter:replies</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="filter:replies" title="העתקת filter:replies" aria-label="העתקת filter:replies"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
           </tbody>
         </table>
@@ -261,23 +308,26 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th scope="col">אופרטור</th><th scope="col">משמעות</th><th scope="col">דוגמה</th></tr>
+            <tr><th scope="col">אופרטור</th><th scope="col">משמעות</th><th scope="col">דוגמה</th><th scope="col"><span class="sr-only">העתקת</span></th></tr>
           </thead>
           <tbody>
             <tr>
               <td><code>lang:</code></td>
               <td>ציוצים שנכתבו בשפה זו</td>
               <td><code class="ex">lang:he</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="lang:" title="העתקת lang:" aria-label="העתקת lang:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>url:</code></td>
               <td>ציוצים שמכילים כתובת URL</td>
               <td><code class="ex">url:&quot;github.com&quot;</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="url:" title="העתקת url:" aria-label="העתקת url:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>near:</code></td>
               <td>ציוצים באזור גיאוגרפי (לא תמיד נתמך).</td>
               <td><code class="ex">near:&quot;Tel Aviv&quot;</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="near:" title="העתקת near:" aria-label="העתקת near:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
           </tbody>
         </table>
@@ -339,38 +389,44 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th scope="col">Operator</th><th scope="col">Meaning</th><th scope="col">Example</th></tr>
+            <tr><th scope="col">Operator</th><th scope="col">Meaning</th><th scope="col">Example</th><th scope="col"><span class="sr-only">Copy</span></th></tr>
           </thead>
           <tbody>
             <tr>
               <td><code>cat dog</code></td>
               <td>Both words must appear (space = AND, the default).</td>
               <td><code class="ex">hedgehog hat</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="cat dog" title="Copy cat dog" aria-label="Copy cat dog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>&quot;exact phrase&quot;</code></td>
               <td>Matches the exact sequence, in quotes.</td>
               <td><code class="ex">&quot;hedgehog with a hat&quot;</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="&quot;exact phrase&quot;" title="Copy &quot;exact phrase&quot;" aria-label="Copy &quot;exact phrase&quot;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>cat OR dog</code></td>
               <td>At least one of the words. OR must be uppercase.</td>
               <td><code class="ex">hedgehog OR cat</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="cat OR dog" title="Copy cat OR dog" aria-label="Copy cat OR dog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>-word</code></td>
               <td>Excludes tweets containing the word.</td>
               <td><code class="ex">hedgehog -cat</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="-word" title="Copy -word" aria-label="Copy -word"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>#hashtag</code></td>
               <td>Tweets carrying that hashtag.</td>
               <td><code class="ex">#hedgehogs</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="#hashtag" title="Copy #hashtag" aria-label="Copy #hashtag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>(a OR b) c</code></td>
               <td>Parentheses group conditions for combinations.</td>
               <td><code class="ex">(hedgehog OR cat) cute</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="(a OR b) c" title="Copy (a OR b) c" aria-label="Copy (a OR b) c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
           </tbody>
         </table>
@@ -380,28 +436,32 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th scope="col">Operator</th><th scope="col">Meaning</th><th scope="col">Example</th></tr>
+            <tr><th scope="col">Operator</th><th scope="col">Meaning</th><th scope="col">Example</th><th scope="col"><span class="sr-only">Copy</span></th></tr>
           </thead>
           <tbody>
             <tr>
               <td><code>from:</code></td>
               <td>Tweets from this user. Comma = multiple users.</td>
               <td><code class="ex">from:eitanshimoni</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="from:" title="Copy from:" aria-label="Copy from:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>to:</code></td>
               <td>Tweets in reply to this user</td>
               <td><code class="ex">to:eitanshimoni</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="to:" title="Copy to:" aria-label="Copy to:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>@</code></td>
               <td>Tweets mentioning this user</td>
               <td><code class="ex">@eitanshimoni</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="@" title="Copy @" aria-label="Copy @"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>list:</code></td>
               <td>Tweets from members of a given list.</td>
               <td><code class="ex">list:123456</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="list:" title="Copy list:" aria-label="Copy list:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
           </tbody>
         </table>
@@ -411,23 +471,26 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th scope="col">Operator</th><th scope="col">Meaning</th><th scope="col">Example</th></tr>
+            <tr><th scope="col">Operator</th><th scope="col">Meaning</th><th scope="col">Example</th><th scope="col"><span class="sr-only">Copy</span></th></tr>
           </thead>
           <tbody>
             <tr>
               <td><code>since:</code></td>
               <td>Tweets on or after this date</td>
               <td><code class="ex">since:2026-01-01</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="since:" title="Copy since:" aria-label="Copy since:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>until:</code></td>
               <td>Tweets before this date</td>
               <td><code class="ex">until:2026-12-31</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="until:" title="Copy until:" aria-label="Copy until:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>within_time:</code></td>
               <td>Tweets from the recent window (minutes/hours/days).</td>
               <td><code class="ex">within_time:2d</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="within_time:" title="Copy within_time:" aria-label="Copy within_time:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
           </tbody>
         </table>
@@ -437,23 +500,26 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th scope="col">Operator</th><th scope="col">Meaning</th><th scope="col">Example</th></tr>
+            <tr><th scope="col">Operator</th><th scope="col">Meaning</th><th scope="col">Example</th><th scope="col"><span class="sr-only">Copy</span></th></tr>
           </thead>
           <tbody>
             <tr>
               <td><code>min_faves:</code></td>
               <td>Minimum number of likes</td>
               <td><code class="ex">min_faves:100</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="min_faves:" title="Copy min_faves:" aria-label="Copy min_faves:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>min_retweets:</code></td>
               <td>Minimum retweet count</td>
               <td><code class="ex">min_retweets:50</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="min_retweets:" title="Copy min_retweets:" aria-label="Copy min_retweets:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>min_replies:</code></td>
               <td>Minimum reply count</td>
               <td><code class="ex">min_replies:10</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="min_replies:" title="Copy min_replies:" aria-label="Copy min_replies:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
           </tbody>
         </table>
@@ -463,38 +529,44 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th scope="col">Operator</th><th scope="col">Meaning</th><th scope="col">Example</th></tr>
+            <tr><th scope="col">Operator</th><th scope="col">Meaning</th><th scope="col">Example</th><th scope="col"><span class="sr-only">Copy</span></th></tr>
           </thead>
           <tbody>
             <tr>
               <td><code>filter:links</code></td>
               <td>Only tweets with URLs</td>
               <td><code class="ex">hedgehog filter:links</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="filter:links" title="Copy filter:links" aria-label="Copy filter:links"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>filter:media</code></td>
               <td>Only tweets with any media</td>
               <td><code class="ex">hedgehog filter:media</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="filter:media" title="Copy filter:media" aria-label="Copy filter:media"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>filter:images</code></td>
               <td>Only tweets with images</td>
               <td><code class="ex">hedgehog filter:images</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="filter:images" title="Copy filter:images" aria-label="Copy filter:images"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>filter:videos</code></td>
               <td>Only tweets with videos</td>
               <td><code class="ex">hedgehog filter:videos</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="filter:videos" title="Copy filter:videos" aria-label="Copy filter:videos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>-filter:retweets</code></td>
               <td>Exclude all retweets</td>
               <td><code class="ex">hedgehog -filter:retweets</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="-filter:retweets" title="Copy -filter:retweets" aria-label="Copy -filter:retweets"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>filter:replies</code></td>
               <td>Only replies. With a minus — excludes replies.</td>
               <td><code class="ex">-filter:replies</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="filter:replies" title="Copy filter:replies" aria-label="Copy filter:replies"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
           </tbody>
         </table>
@@ -504,23 +576,26 @@
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th scope="col">Operator</th><th scope="col">Meaning</th><th scope="col">Example</th></tr>
+            <tr><th scope="col">Operator</th><th scope="col">Meaning</th><th scope="col">Example</th><th scope="col"><span class="sr-only">Copy</span></th></tr>
           </thead>
           <tbody>
             <tr>
               <td><code>lang:</code></td>
               <td>Tweets written in this language</td>
               <td><code class="ex">lang:en</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="lang:" title="Copy lang:" aria-label="Copy lang:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>url:</code></td>
               <td>Tweets containing a specific URL</td>
               <td><code class="ex">url:&quot;github.com&quot;</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="url:" title="Copy url:" aria-label="Copy url:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
             <tr>
               <td><code>near:</code></td>
               <td>Tweets near a place (support varies).</td>
               <td><code class="ex">near:&quot;Tel Aviv&quot;</code></td>
+              <td class="copy-cell"><button class="copy" type="button" data-copy="near:" title="Copy near:" aria-label="Copy near:"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></td>
             </tr>
           </tbody>
         </table>
@@ -570,6 +645,51 @@
     <span style="margin-inline-start:auto">© 2026 Eitan Shimoni</span>
   </footer>
 </div>
+<script>
+  // Copy-to-clipboard for every operator row. Delegated from the document so it
+  // costs one listener regardless of how many rows the guide grows to.
+  (function () {
+    var COPY = "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\"/><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"/></svg>", CHECK = "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 6 9 17l-5-5\"/></svg>";
+    document.addEventListener("click", function (e) {
+      var btn = e.target.closest(".copy");
+      if (!btn) return;
+      var text = btn.getAttribute("data-copy");
+      var restore = function () { btn.innerHTML = COPY; btn.classList.remove("done"); };
+      var ok = function () {
+        btn.innerHTML = CHECK;
+        btn.classList.add("done");
+        clearTimeout(btn._t);
+        btn._t = setTimeout(restore, 1500);
+      };
+
+      // Selecting a hidden textarea and running execCommand still works where
+      // the async clipboard API is unavailable or refused — embedded webviews
+      // and some mobile browsers reject writeText outright.
+      var legacy = function () {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.cssText = "position:absolute;left:-9999px;top:0";
+        document.body.appendChild(ta);
+        ta.select();
+        var done = false;
+        try { done = document.execCommand("copy"); } catch (err) { done = false; }
+        document.body.removeChild(ta);
+        return done;
+      };
+
+      // Feedback must never be claimed before the copy actually succeeds, and a
+      // rejected promise must fall through rather than leave the button dead.
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(ok, function () {
+          if (legacy()) ok();
+        });
+      } else if (legacy()) {
+        ok();
+      }
+    });
+  })();
+</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2782026165628312" crossorigin="anonymous"></script>
 <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
 </body>

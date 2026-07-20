@@ -12,6 +12,14 @@
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta name="theme-color" content="#03030f">
+    <!-- iOS ignores the web manifest's display mode when deciding whether a
+         home-screen launch gets browser chrome. Without these, "Add to Home
+         Screen" opens inside a Safari shell with a bar at the top instead of as
+         a standalone app. Android reads display:standalone from the manifest. -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Tweetelligent">
     <!-- Open Graph — shown when the tool is shared on social networks -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Tweetelligent" />
@@ -20,7 +28,7 @@
     <meta property="og:url" content="https://eitanisrael.github.io/" />
     <meta property="og:image" content="https://eitanisrael.github.io/icon-512.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <script type="module" crossorigin src="/assets/index-BC3gb2o1.js"></script>
+    <script type="module" crossorigin src="/assets/index-SNnNUNUN.js"></script>
   <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
   <body>
     <div id="root"></div>
